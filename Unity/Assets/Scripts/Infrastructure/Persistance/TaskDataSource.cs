@@ -21,4 +21,9 @@ public class TaskDataSource : ITaskRepository
     {
         return null;
     }
+
+    public List<Task> FindAllTasks()
+    {
+        return null;
+    }
 }

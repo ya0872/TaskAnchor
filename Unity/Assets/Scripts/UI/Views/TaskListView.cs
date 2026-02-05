@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class TaskListView : TaskView
 {
-    protected override void Render(TaskViewModel viewModel)
+    public override void Render(List<TaskViewModel> taskViewModelList)
     {
         
     }
 
-    protected override void Refresh()
+    private void Refresh()
     {
         
     }
@@ -16,5 +16,20 @@ public class TaskListView : TaskView
     public void NotifySubmit(string title)
     {
 
+    }
+
+    public void Show(List<TaskViewModel> taskViewModelList)
+    {
+        
+    }
+
+    private void BeforeRender()
+    {
+        
+    }
+
+    private void AfterRender()
+    {
+        
     }
 }
