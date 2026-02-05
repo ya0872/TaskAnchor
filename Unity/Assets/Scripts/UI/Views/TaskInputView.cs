@@ -1,65 +1,94 @@
 using UnityEngine;
-using TMPro; // InputFieldを使うために必要
-using UnityEngine.UI; // Buttonを使うために必要
+using TMPro;
+using UnityEngine.UI;
 
+/// <summary>
+/// タスク入力欄と追加ボタンを管理するクラス。
+/// 【変更点】TaskControllerを作らず、ここから直接リストに追加命令を出すようにしました。
+/// </summary>
 public class TaskInputView : TaskView
 {
-    [Header("UI References")]
-    [SerializeField] private TMP_InputField inputField; // 文字入力欄
-    [SerializeField] private Button addButton;          // 追加ボタン
+    [Header("Input UI")]
+    [Tooltip("文字を入力する場所")]
+    [SerializeField] private TMP_InputField inputField;
 
-    // リストを管理しているスクリプトへの参照（ここに命令を送る）
+    [Tooltip("追加ボタン")]
+    [SerializeField] private Button addButton;
+
+    [Header("Connection")]
+    [Tooltip("【重要】タスクを追加する先のリストビューをここにセットする")]
     [SerializeField] private TaskListView taskListView;
 
-    // ---------------------------------------------------------
-    // 【AI生成】初期化とイベント登録
-    // ボタンが押されたら OnAddButtonClicked を呼ぶように設定
-    // ---------------------------------------------------------
-    private void Start()
+    // =================================================================
+    // オーバーライド
+    // =================================================================
+
+    protected override void Start()
     {
+        Debug.Log("[TaskInputView] Start: 入力ビューの初期化");
+
+        // エラー回避のためのダミー初期化
+        Render(new TaskViewModel(0, "", false));
+
+        // ボタンのイベント登録
         if (addButton != null)
         {
+            Debug.Log("[TaskInputView] Setup: Addボタンにクリック処理を登録します");
             addButton.onClick.AddListener(OnAddButtonClicked);
         }
-    }
-
-    // ---------------------------------------------------------
-    // 【AI生成】追加ボタンが押された時の処理
-    // 1. 入力が空じゃないかチェック
-    // 2. TaskListViewに生成を依頼
-    // 3. 入力欄を空っぽに戻す
-    // ---------------------------------------------------------
-    private void OnAddButtonClicked()
-    {
-        // 入力欄やリストの参照がない場合はエラーを出して中断
-        if (inputField == null || taskListView == null)
+        else
         {
-            Debug.LogError("[TaskInputView] 設定エラー: Inspectorで InputField または TaskListView を設定してください");
-            return;
+            Debug.LogError("[TaskInputView] Error: AddButton がInspectorで設定されていません！");
         }
 
-        // 入力された文字を取得
-        string text = inputField.text;
-
-        // 空文字や空白だけなら何もしない
-        if (string.IsNullOrWhiteSpace(text))
+        // 接続チェック
+        if (taskListView == null)
         {
-            Debug.LogWarning("[TaskInputView] 文字が入力されていません");
-            return;
+            Debug.LogWarning("[TaskInputView] Warning: 操作先の TaskListView が設定されていません。追加機能は動きません。");
         }
-
-        Debug.Log($"[TaskInputView] 追加ボタン押下: {text}");
-
-        // ★ここでTaskListViewの生成メソッドを呼ぶ！
-        // (さっき作った GenerateTestTask を再利用する)
-        taskListView.GenerateTestTask(text);
-
-        // 入力欄をクリアする（次の入力のために）
-        inputField.text = "";
     }
 
-    // 元々の継承メソッド（今回は空でOK）
     protected override void Render(TaskViewModel viewModel)
     {
+        // 画面更新時に入力欄をクリア
+        if (inputField != null)
+        {
+            inputField.text = "";
+        }
+    }
+
+    // =================================================================
+    // ボタンクリック時の処理
+    // =================================================================
+    private void OnAddButtonClicked()
+    {
+        // 安全確認
+        if (inputField == null) return;
+
+        // 1. 入力された文字を取得
+        string text = inputField.text;
+
+        // 空文字チェック
+        if (string.IsNullOrEmpty(text))
+        {
+            Debug.LogWarning("[TaskInputView] Warning: 文字が入力されていません。処理を中断します。");
+            return;
+        }
+
+        Debug.Log($"[TaskInputView] Action: 追加ボタン押下 -> 内容: '{text}'");
+
+        // 2. 【AI修正】コントローラーを使わず、直接リストビューに命令を出す！
+        if (taskListView != null)
+        {
+            Debug.Log("[TaskInputView] Command: TaskListView にタスク生成を命令します");
+            taskListView.GenerateTestTask(text);
+        }
+        else
+        {
+            Debug.LogError("[TaskInputView] Error: TaskListView が設定されていないため、追加できません！");
+        }
+
+        // 3. 入力欄をクリアして次の入力に備える
+        inputField.text = "";
     }
 }

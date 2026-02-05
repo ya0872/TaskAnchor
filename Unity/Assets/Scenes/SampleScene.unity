@@ -283,7 +283,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &201869468
 MonoBehaviour:
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 0
+  m_VerticalFit: 2
 --- !u!114 &201869469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: "\u30BF\u30B9\u30AF\u306E\u5185\u5BB9\u3092\u5165\u529B\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
   m_sharedMaterial: {fileID: -7567109663446371360, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Add
+  m_text: "\u30BF\u30B9\u30AF\u306E\u8FFD\u52A0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
   m_sharedMaterial: {fileID: -7567109663446371360, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: "\u30BF\u30B9\u30AF\u306E\u5185\u5BB9\u3092\u5165\u529B"
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1779,8 +1779,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 613482823}
   m_HandleRect: {fileID: 613482822}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.77666664
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1924,7 +1924,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093280760}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 

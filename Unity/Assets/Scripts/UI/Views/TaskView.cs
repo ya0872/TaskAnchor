@@ -1,50 +1,68 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using System; // EventHandlerを使うために必要
 
+/// <summary>
+/// 全てのView（画面・UI部品）の親クラス。
+/// 共通の描画フロー（Show -> Before -> Refresh -> After）を管理する。
+/// </summary>
 public abstract class TaskView : MonoBehaviour
 {
-    // イベントハンドラー（Presenterとの通信用）
     protected EventHandler _eventHandler;
 
-    // ---------------------------------------------------------
-    // 【修正】公開範囲を protected に変更（外部から隠す）
-    // ---------------------------------------------------------
-    protected virtual void Render(TaskViewModel viewModel)
+    // =================================================================
+    // Unityライフサイクル
+    // =================================================================
+
+    // 【AI生成】子クラスでの拡張を考慮し、virtual修飾子を付与して定義
+    protected virtual void Start()
     {
-        // 基本クラスでは何もしない（オーバーライド用）
+        Debug.Log($"[{gameObject.name}] Start: 初期化を開始します");
+
+        // 【修正】引数なしだとエラーになるので、ダミーデータ(ID=0, タイトル="", 完了=false)を渡す
+        Render(new TaskViewModel(0, "", false));
     }
 
-    // ---------------------------------------------------------
-    // 【修正】公開範囲を protected に変更（外部から隠す）
-    // ---------------------------------------------------------
-    protected virtual void Refresh()
-    {
-        // 画面の更新処理など
-    }
-
-    // ---------------------------------------------------------
-    // 初期化処理（外部から呼ぶので public のままが一般的だが、
-    // 今回の指定にはないため一旦 public のままにしておく）
-    // ---------------------------------------------------------
     public virtual void Initialize(EventHandler eventHandler)
     {
+        Debug.Log($"[{gameObject.name}] Initialize: EventHandlerを設定しました");
         _eventHandler = eventHandler;
     }
 
-    // ---------------------------------------------------------
-    // 【指定通り】これだけ public（外部公開）
-    // ---------------------------------------------------------
+    // =================================================================
+    // 公開メソッド
+    // =================================================================
+
+    // 【AI生成】描画フローの制御（テンプレートメソッドパターン）の実装
+    // 外部からはこのShowメソッドを呼ぶだけで、適切な順序で更新処理が走るように設計
     public void Show()
     {
-        Debug.Log($"[TaskView] {gameObject.name} を表示します");
+        Debug.Log($"[{gameObject.name}] Show: 画面を表示し、更新フローを開始します");
+
         gameObject.SetActive(true);
 
-        // 表示したタイミングで更新をかけるならここでRefreshを呼ぶ
+        // 定義された順序でメソッドを実行
+        BeforeRender();
         Refresh();
+        AfterRender();
+
+        Debug.Log($"[{gameObject.name}] Show: 更新フロー完了");
     }
 
-    // 以前のコードにあったヘルパーメソッド群（protectedのまま）
-    protected void BeforeRender() { }
-    protected void AfterRender() { }
+    // =================================================================
+    // 内部処理（オーバーライド用）
+    // =================================================================
+
+    // 【AI修正】外部からの直接呼び出しを防ぐため、publicからprotectedに変更
+    protected virtual void Render(TaskViewModel viewModel)
+    {
+    }
+
+    // 【AI修正】再描画ロジックの分離のため定義
+    protected virtual void Refresh()
+    {
+        Debug.Log($"[{gameObject.name}] Refresh: 再描画要求");
+    }
+
+    protected virtual void BeforeRender() { }
+    protected virtual void AfterRender() { }
 }
