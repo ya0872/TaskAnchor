@@ -5,12 +5,12 @@ public abstract class TaskView : MonoBehaviour
 {
     protected EventHandler _eventHandler;
 
-    public virtual void Render(TaskViewModel viewModel)
+    protected virtual void Render(TaskViewModel viewModel)
     {
         
     }
 
-    public virtual void Refresh()
+    protected virtual void Refresh(TaskViewModel viewModel)
     {
 
     }

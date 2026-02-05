@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class TaskInputView : TaskView
 {
-    public override void Render(TaskViewModel viewModel)
+    protected override void Render(TaskViewModel viewModel)
+    {
+        
+    }
+
+    protected override void Refresh(TaskViewModel viewModel)
     {
         
     }
