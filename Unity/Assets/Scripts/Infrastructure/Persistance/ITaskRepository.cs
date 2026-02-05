@@ -2,9 +2,11 @@ using System.Collections.Generic;
 
 public interface ITaskRepository
 {
-    public void SaveDB(Task task);
-    public void UpdateDB(Task task);
-    public void DeleteDB(int taskId);
-    public Task FindTaskFromId(int taskId);
+    public void InitializeDatabase(string databaseName);
+    public void CreateTaskTable();
+    public void Save(Task task);
+    public void Update(Task task);
+    public void Delete(int taskId);
+    public Task FindTaskById(int taskId);
     public List<Task> FindAllTasks();
 }

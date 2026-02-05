@@ -13,7 +13,7 @@ public class TaskController
 
     public List<TaskViewModel> CompleteTask(int taskId)
     {
-        _taskRepository.DeleteDB(taskId);
+        _taskRepository.Delete(taskId);
 
         List<Task> taskList = _taskRepository.FindAllTasks();
         List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
@@ -27,8 +27,8 @@ public class TaskController
 
     public List<TaskViewModel> AddTask(int taskId)
     {
-        Task task = _taskRepository.FindTaskFromId(taskId);
-        _taskRepository.SaveDB(task);
+        Task task = _taskRepository.FindTaskById(taskId);
+        _taskRepository.Save(task);
 
         List<Task> taskList = _taskRepository.FindAllTasks();
         List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
