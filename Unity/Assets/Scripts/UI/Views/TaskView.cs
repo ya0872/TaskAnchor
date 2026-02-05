@@ -10,7 +10,7 @@ public abstract class TaskView : MonoBehaviour
         
     }
 
-    protected virtual void Refresh(TaskViewModel viewModel)
+    protected virtual void Refresh()
     {
 
     }
@@ -20,7 +20,7 @@ public abstract class TaskView : MonoBehaviour
         _eventHandler = eventHandler;
     }
 
-    public void Show()
+    public void Show(TaskViewModel viewModel)
     {
 
     }
