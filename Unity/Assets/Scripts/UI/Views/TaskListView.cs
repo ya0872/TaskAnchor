@@ -1,28 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // TextMeshProを使うために追加
+using TMPro;
+using UnityEngine.UI; // ボタンを扱うために追加！
 
 public class TaskListView : TaskView
 {
     [Header("UI References")]
-    [SerializeField] private GameObject taskItemPrefab; // コピー元のプレハブ
-    [SerializeField] private Transform contentParent;   // 生成場所 (Content)
+    [SerializeField] private GameObject taskItemPrefab;
+    [SerializeField] private Transform contentParent;
 
-    // ---------------------------------------------------------
-    // 【AI生成】テストデータ生成用メソッドの呼び出し
-    // ---------------------------------------------------------
+    // StartはコメントアウトのままでOK
     private void Start()
     {
-        Debug.Log("[TaskListView] テスト生成を開始します");
-        GenerateTestTask("牛乳を買う");
-        GenerateTestTask("Unity課題");
-        GenerateTestTask("スクリプト作成なしで実装");
+        // Debug.Log("[TaskListView] テスト生成を開始します");
+        // GenerateTestTask("牛乳を買う");
     }
 
     // ---------------------------------------------------------
-    // 【AI生成】タスク動的生成ロジック
-    // プレハブをインスタンス化し、GetComponentInChildrenで
-    // テキストを書き換える実装をAIが提案
+    // 【AI生成】タスク生成 ＋ 削除機能の追加
     // ---------------------------------------------------------
     public void GenerateTestTask(string title)
     {
@@ -36,27 +31,40 @@ public class TaskListView : TaskView
         // 2. 生成する
         GameObject newItem = Instantiate(taskItemPrefab, contentParent);
 
-        // 3. 生成したプレハブの中から TextMeshProUGUI コンポーネントを探す
-        // (TaskItemViewを使わず、直接コンポーネントを取得する方式)
+        // 3. テキストを設定（前回実装済み）
         TextMeshProUGUI textComponent = newItem.GetComponentInChildren<TextMeshProUGUI>();
-
         if (textComponent != null)
         {
-            // 4. 文字を変更
             textComponent.text = title;
-            Debug.Log($"[TaskListView] 生成成功: {title}");
+        }
+
+        // ---------------------------------------------------------
+        // ★ここから追加：削除ボタンの設定
+        // プレハブの中から "Button" コンポーネントを探して、
+        // 「押されたら newItem（自分自身）を破壊する」という命令を追加
+        // ---------------------------------------------------------
+        Button deleteButton = newItem.GetComponentInChildren<Button>();
+
+        if (deleteButton != null)
+        {
+            // ラムダ式（=>）を使って、その場で処理を書く
+            deleteButton.onClick.AddListener(() =>
+            {
+                Debug.Log($"[TaskListView] タスク削除: {title}");
+                Destroy(newItem); // ゲームオブジェクトをシーンから消滅させる
+            });
         }
         else
         {
-            Debug.LogError("[TaskListView] 生成したプレハブの中に TextMeshProUGUI が見つかりません");
+            Debug.LogWarning("[TaskListView] 削除ボタンが見つかりませんでした");
         }
-    }
-    // ---------------------------------------------------------
-    // 【AI生成】終了
-    // ---------------------------------------------------------
+        // ---------------------------------------------------------
 
-    // 元々の継承メソッド（既存の実装）
-    public override void Render(TaskViewModel viewModel)
+        Debug.Log($"[TaskListView] 生成成功: {title}");
+    }
+
+    // 継承元の修正に合わせて protected に変更済み
+    protected override void Render(TaskViewModel viewModel)
     {
     }
 

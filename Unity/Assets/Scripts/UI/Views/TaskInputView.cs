@@ -59,7 +59,7 @@ public class TaskInputView : TaskView
     }
 
     // 元々の継承メソッド（今回は空でOK）
-    public override void Render(TaskViewModel viewModel)
+    protected override void Render(TaskViewModel viewModel)
     {
     }
 }
