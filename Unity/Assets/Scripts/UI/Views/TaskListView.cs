@@ -8,7 +8,7 @@ public class TaskListView : TaskView
         
     }
 
-    protected override void Refresh(TaskViewModel viewModel)
+    protected override void Refresh()
     {
         
     }
