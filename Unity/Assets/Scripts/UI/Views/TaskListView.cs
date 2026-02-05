@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TaskListView : MonoBehaviour, TaskView
+public class TaskListView : TaskView
 {
-    private override void Render(TaskViewModel viewModel)
+    public override void Render(TaskViewModel viewModel)
     {
         
     }
