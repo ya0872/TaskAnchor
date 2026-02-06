@@ -1,15 +1,19 @@
-using System.Collections.Generic;
+using UnityEngine;
 
+/// <summary>
+/// 既存のファイルをこの内容で上書きしてください。
+/// これでIdやTitleが認識されるようになります。
+/// </summary>
 public class TaskViewModel
 {
-    public int TaskId { get; }
-    public string DisplayTitle { get; }
-    public bool IsCompleted { get; }
+    public int Id;
+    public string Title;
+    public bool IsCompleted;
 
-    public TaskViewModel(int taskId, string displayTitle, bool isCompleted)
+    public TaskViewModel(int id, string title, bool isCompleted)
     {
-        TaskId = taskId;
-        DisplayTitle = displayTitle;
+        Id = id;
+        Title = title;
         IsCompleted = isCompleted;
     }
 }

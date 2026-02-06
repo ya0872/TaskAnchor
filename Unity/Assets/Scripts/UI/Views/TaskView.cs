@@ -1,68 +1,69 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
-/// 全てのView（画面・UI部品）の親クラス。
-/// 共通の描画フロー（Show -> Before -> Refresh -> After）を管理する。
+/// 全てのViewの基底クラス。
+/// ライフサイクル（Show -> Before -> Refresh -> After）を管理する。
 /// </summary>
 public abstract class TaskView : MonoBehaviour
 {
-    protected EventHandler _eventHandler;
-
     // =================================================================
-    // Unityライフサイクル
+    // ライフサイクル管理 (テンプレートメソッドパターン)
     // =================================================================
 
-    // 【AI生成】子クラスでの拡張を考慮し、virtual修飾子を付与して定義
-    protected virtual void Start()
-    {
-        Debug.Log($"[{gameObject.name}] Start: 初期化を開始します");
-
-        // 【修正】引数なしだとエラーになるので、ダミーデータ(ID=0, タイトル="", 完了=false)を渡す
-        Render(new TaskViewModel(0, "", false));
-    }
-
-    public virtual void Initialize(EventHandler eventHandler)
-    {
-        Debug.Log($"[{gameObject.name}] Initialize: EventHandlerを設定しました");
-        _eventHandler = eventHandler;
-    }
-
-    // =================================================================
-    // 公開メソッド
-    // =================================================================
-
-    // 【AI生成】描画フローの制御（テンプレートメソッドパターン）の実装
-    // 外部からはこのShowメソッドを呼ぶだけで、適切な順序で更新処理が走るように設計
+    /// <summary>
+    /// 画面を表示・更新するための公開メソッド
+    /// </summary>
     public void Show()
     {
-        Debug.Log($"[{gameObject.name}] Show: 画面を表示し、更新フローを開始します");
-
-        gameObject.SetActive(true);
-
-        // 定義された順序でメソッドを実行
+        // 【AI実装】描画フローの統一
+        // どのViewでも必ずこの順序で処理が走るように強制する
         BeforeRender();
         Refresh();
         AfterRender();
-
-        Debug.Log($"[{gameObject.name}] Show: 更新フロー完了");
     }
 
-    // =================================================================
-    // 内部処理（オーバーライド用）
-    // =================================================================
-
-    // 【AI修正】外部からの直接呼び出しを防ぐため、publicからprotectedに変更
-    protected virtual void Render(TaskViewModel viewModel)
+    /// <summary>
+    /// 描画前の準備（例：既存のリストをクリアする）
+    /// </summary>
+    protected virtual void BeforeRender()
     {
+        // デフォルト実装：何もしない
     }
 
-    // 【AI修正】再描画ロジックの分離のため定義
+    /// <summary>
+    /// データの更新・再描画要求
+    /// </summary>
     protected virtual void Refresh()
     {
-        Debug.Log($"[{gameObject.name}] Refresh: 再描画要求");
+        // デフォルト実装：何もしない
     }
 
-    protected virtual void BeforeRender() { }
-    protected virtual void AfterRender() { }
+    /// <summary>
+    /// 描画後の処理（例：レイアウトの強制更新）
+    /// </summary>
+    protected virtual void AfterRender()
+    {
+        // デフォルト実装：何もしない
+    }
+
+    // =================================================================
+    // 描画メソッド
+    // =================================================================
+
+    /// <summary>
+    /// データを受け取ってUIを更新する抽象メソッド。
+    /// 子クラスで必ず実装しなければならない。
+    /// </summary>
+    /// <param name="viewModel">表示用データ</param>
+    // 【修正】型を TaskViewModel に戻しました
+    protected abstract void Render(TaskViewModel viewModel);
+
+    // =================================================================
+    // Unity イベント
+    // =================================================================
+    protected virtual void Start()
+    {
+        // 共通の初期化処理があればここに記述
+    }
 }

@@ -1,94 +1,103 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
-/// タスク入力欄と追加ボタンを管理するクラス。
-/// 【変更点】TaskControllerを作らず、ここから直接リストに追加命令を出すようにしました。
+/// タスクの入力（追加）を行うビュー。
+/// ユーザーが文字を入力し、ボタンを押すとタスクを追加する。
 /// </summary>
 public class TaskInputView : TaskView
 {
-    [Header("Input UI")]
-    [Tooltip("文字を入力する場所")]
+    [Header("UI References")]
+    [Tooltip("タスク名を入力するフィールド")]
     [SerializeField] private TMP_InputField inputField;
 
     [Tooltip("追加ボタン")]
     [SerializeField] private Button addButton;
 
-    [Header("Connection")]
-    [Tooltip("【重要】タスクを追加する先のリストビューをここにセットする")]
+    [Tooltip("操作対象のリストビュー（直接参照）")]
     [SerializeField] private TaskListView taskListView;
 
     // =================================================================
-    // オーバーライド
+    // 初期化
     // =================================================================
-
     protected override void Start()
     {
-        Debug.Log("[TaskInputView] Start: 入力ビューの初期化");
+        base.Start();
+        Debug.Log("[TaskInputView] Start: 入力画面の初期化を開始");
 
-        // エラー回避のためのダミー初期化
-        Render(new TaskViewModel(0, "", false));
-
-        // ボタンのイベント登録
+        // 【AI実装】ボタンイベントの登録
+        // ボタンが押されたら OnAddButtonClicked を呼ぶように設定
         if (addButton != null)
         {
-            Debug.Log("[TaskInputView] Setup: Addボタンにクリック処理を登録します");
             addButton.onClick.AddListener(OnAddButtonClicked);
         }
         else
         {
-            Debug.LogError("[TaskInputView] Error: AddButton がInspectorで設定されていません！");
-        }
-
-        // 接続チェック
-        if (taskListView == null)
-        {
-            Debug.LogWarning("[TaskInputView] Warning: 操作先の TaskListView が設定されていません。追加機能は動きません。");
-        }
-    }
-
-    protected override void Render(TaskViewModel viewModel)
-    {
-        // 画面更新時に入力欄をクリア
-        if (inputField != null)
-        {
-            inputField.text = "";
+            Debug.LogError("[TaskInputView] Error: AddButtonがアタッチされていません");
         }
     }
 
     // =================================================================
-    // ボタンクリック時の処理
+    // イベント処理
     // =================================================================
+    /// <summary>
+    /// 追加ボタンが押された時の処理
+    /// </summary>
     private void OnAddButtonClicked()
     {
-        // 安全確認
-        if (inputField == null) return;
-
-        // 1. 入力された文字を取得
-        string text = inputField.text;
-
-        // 空文字チェック
-        if (string.IsNullOrEmpty(text))
+        // 【AI実装】入力チェック
+        // 空文字やスペースだけの場合は追加しない
+        if (inputField == null || string.IsNullOrWhiteSpace(inputField.text))
         {
-            Debug.LogWarning("[TaskInputView] Warning: 文字が入力されていません。処理を中断します。");
+            Debug.LogWarning("[TaskInputView] Warning: 入力が空のため、タスク追加を中断しました");
             return;
         }
 
-        Debug.Log($"[TaskInputView] Action: 追加ボタン押下 -> 内容: '{text}'");
+        string newTitle = inputField.text;
+        Debug.Log($"[TaskInputView] Action: 追加ボタン押下 -> 入力値: '{newTitle}'");
 
-        // 2. 【AI修正】コントローラーを使わず、直接リストビューに命令を出す！
+        // 【AI実装】リストビューへの追加命令
+        // 本来はControllerを経由すべきだが、現状はTaskListViewを直接操作する
         if (taskListView != null)
         {
-            Debug.Log("[TaskInputView] Command: TaskListView にタスク生成を命令します");
-            taskListView.GenerateTestTask(text);
+            // TaskListView側のメソッド名は GenerateTestTask のまま維持
+            taskListView.GenerateTestTask(newTitle);
+            Debug.Log("[TaskInputView] Success: TaskListViewへ追加リクエストを送信しました");
         }
         else
         {
-            Debug.LogError("[TaskInputView] Error: TaskListView が設定されていないため、追加できません！");
+            Debug.LogError("[TaskInputView] Error: TaskListViewの参照がありません（Inspectorで設定してください）");
         }
 
-        // 3. 入力欄をクリアして次の入力に備える
+        // 入力欄をクリアして次の入力に備える
         inputField.text = "";
+    }
+
+    // =================================================================
+    // TaskView の必須オーバーライド
+    // =================================================================
+
+    /// <summary>
+    /// 入力画面の描画更新処理
+    /// </summary>
+    /// <param name="viewModel">表示データ</param>
+    // 【修正】型を TaskViewModel に戻しました
+    protected override void Render(TaskViewModel viewModel)
+    {
+        Debug.Log("[TaskInputView] Render: 描画更新リクエストを受信しました");
+
+        // 入力画面では特に表示するデータがないため、ログ出力のみ行う
+        // 必要であればここで入力欄の初期値をセットする等の処理を追加可能
+        if (viewModel != null)
+        {
+            Debug.Log($"[TaskInputView] Render Info: ID={viewModel.Id}, Title={viewModel.Title}");
+        }
+    }
+
+    // 親クラスの仮想メソッドをそのまま使用（ログ出しのため呼ぶ）
+    protected override void Refresh()
+    {
+        base.Refresh();
     }
 }
