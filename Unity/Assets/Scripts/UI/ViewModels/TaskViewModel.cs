@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public class TaskViewModel
 {
+    // プロパティに変更（頭文字が大文字）
     public int TaskId { get; }
     public string DisplayTitle { get; }
     public bool IsCompleted { get; }
