@@ -294,8 +294,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30BF\u30B9\u30AF\u306E\u8FFD\u52A0"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
-  m_sharedMaterial: {fileID: -7567109663446371360, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ea566492f593e8748a90cdf5aa93b66c, type: 2}
+  m_sharedMaterial: {fileID: -7567109663446371360, guid: ea566492f593e8748a90cdf5aa93b66c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -453,7 +453,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 7355135525643528517}
   addButton: {fileID: 7374090517436010146}
-  taskListView: {fileID: 0}
 --- !u!1 &7110537338547247136
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,8 +642,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
-  m_sharedMaterial: {fileID: -7567109663446371360, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ea566492f593e8748a90cdf5aa93b66c, type: 2}
+  m_sharedMaterial: {fileID: -7567109663446371360, guid: ea566492f593e8748a90cdf5aa93b66c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -797,8 +796,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30BF\u30B9\u30AF\u306E\u5185\u5BB9\u3092\u5165\u529B\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
-  m_sharedMaterial: {fileID: -7567109663446371360, guid: a7a2c82795c9009498e0a4ddf6a1b603, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ea566492f593e8748a90cdf5aa93b66c, type: 2}
+  m_sharedMaterial: {fileID: -7567109663446371360, guid: ea566492f593e8748a90cdf5aa93b66c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
