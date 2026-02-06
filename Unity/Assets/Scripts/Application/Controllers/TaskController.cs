@@ -11,33 +11,25 @@ public class TaskController
         _taskViewModelMapper = taskViewModelMapper;
     }
 
+    // 完了処理（削除して最新リストを返す）
     public List<TaskViewModel> CompleteTask(int taskId)
     {
         _taskRepository.Delete(taskId);
-
-        List<Task> taskList = _taskRepository.FindAllTasks();
-        List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
-        foreach (var t in taskList)
-        {
-            taskViewModelList.Add(_taskViewModelMapper.MapTask(t));
-        }
-
-        return taskViewModelList;
+        return LoadAllTasks();
     }
 
-    public List<TaskViewModel> AddTask(int taskId)
+    // 【修正】タイトルを受け取って新規作成する
+    public List<TaskViewModel> AddTask(string title)
     {
-        Task task = _taskRepository.FindTaskById(taskId);
-        _taskRepository.Save(task);
-
-        List<Task> taskList = _taskRepository.FindAllTasks();
-        List<TaskViewModel> taskViewModelList = new List<TaskViewModel>();
-        foreach (var t in taskList)
+        // 新しいタスクを作成 (IDはAutoIncrementなので0でOK)
+        Task newTask = new Task
         {
-            taskViewModelList.Add(_taskViewModelMapper.MapTask(t));
-        }
+            Title = title,
+            IsCompleted = false
+        };
 
-        return taskViewModelList;
+        _taskRepository.Save(newTask);
+        return LoadAllTasks();
     }
 
     public List<TaskViewModel> LoadAllTasks()
@@ -48,7 +40,6 @@ public class TaskController
         {
             taskViewModelList.Add(_taskViewModelMapper.MapTask(t));
         }
-
         return taskViewModelList;
     }
 }
