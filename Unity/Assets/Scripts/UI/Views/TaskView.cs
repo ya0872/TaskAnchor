@@ -1,28 +1,17 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class TaskView : MonoBehaviour
 {
-    // 具体的な型に変更
-    protected EventHandler eventHandler;
+    protected EventHandler _eventHandler;
 
-    public void Initialize(EventHandler handler)
+    public virtual void Render(List<TaskViewModel> taskViewModelList)
     {
-        this.eventHandler = handler;
+        
     }
 
-    public void Show(List<TaskViewModel> dataList)
+    public virtual void Initialize(EventHandler eventHandler)
     {
-        BeforeRender();
-        Render(dataList);
-        AfterRender();
+        _eventHandler = eventHandler;
     }
-
-    protected virtual void BeforeRender() { }
-    protected virtual void AfterRender() { }
-
-    // リストを受け取る形に変更
-    public abstract void Render(List<TaskViewModel> taskViewModelList);
-
-    protected virtual void Start() { }
 }
