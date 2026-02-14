@@ -9,7 +9,7 @@ public class TaskInputView : TaskView
         
     }
 
-    public void NotifyTaskCompleted(int taskId)
+    public void NotifySubmit(string title)
     {
 
     }
