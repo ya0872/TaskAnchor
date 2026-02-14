@@ -19,8 +19,8 @@ public class Bootstrap : MonoBehaviour
         _taskRepository.CreateTaskTable();
 
         _taskController = new TaskController(_taskRepository, _taskViewModelMapper);
-        _eventHandler.Initialize(_taskController, _uiLayoutFixer, _taskListView, _taskInputView);
         _taskInputView.Initialize(_eventHandler);
         _taskListView.Initialize(_eventHandler);
+        _eventHandler.Initialize(_taskController, _uiLayoutFixer, _taskListView, _taskInputView);
     }
 }
