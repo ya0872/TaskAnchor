@@ -5,12 +5,12 @@ public class TaskController
     private readonly ITaskRepository _taskRepository;
     private readonly ITaskViewModelMapper _taskViewModelMapper;
 
-    /*private List<Task> sampleTasks = new List<Task>
+    private List<Task> sampleTasks = new List<Task>
     {
         new Task { TaskId = 1, Title = "牛乳を買う", IsCompleted = false },
         new Task { TaskId = 2, Title = "Unity勉強", IsCompleted = false },
         new Task { TaskId = 3, Title = "部屋の掃除", IsCompleted = false },
-    };*/
+    };
 
     public TaskController(ITaskRepository taskRepository, ITaskViewModelMapper taskViewModelMapper)
     {
@@ -18,10 +18,10 @@ public class TaskController
         _taskViewModelMapper = taskViewModelMapper;
 
         // Sample data insertion
-        /*foreach (var task in sampleTasks)
+        foreach (var task in sampleTasks)
         {
             _taskRepository.Save(task);
-        }*/
+        }
     }
 
     public List<TaskViewModel> CompleteTask(int taskId)

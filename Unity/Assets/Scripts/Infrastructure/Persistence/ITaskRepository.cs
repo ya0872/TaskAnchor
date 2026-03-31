@@ -9,4 +9,5 @@ public interface ITaskRepository
     public void Delete(int taskId);
     public Task FindTaskById(int taskId);
     public List<Task> FindAllTasks();
+    public void Close();
 }
