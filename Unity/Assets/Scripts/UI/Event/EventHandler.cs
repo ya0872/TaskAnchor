@@ -14,7 +14,10 @@ public class EventHandler : MonoBehaviour
         _uiLayoutFixer = uiLayoutFixer;
         _taskListView = taskListView;
         _taskInputView = taskInputView;
+    }
 
+    public void AppLounch()
+    {
         List<TaskViewModel> taskViewModelList =  _taskController.LoadAllTasks();
         _taskListView.Render(taskViewModelList);
         _taskInputView.Render(taskViewModelList);

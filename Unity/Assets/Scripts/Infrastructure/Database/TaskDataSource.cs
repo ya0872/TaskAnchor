@@ -63,4 +63,10 @@ public class TaskDataSource : ITaskRepository
     {
         return _taskDatabase.Table<Task>().ToList();
     }
+
+    public void Close()
+    {
+        _taskDatabase?.Close();
+    }
+
 }
