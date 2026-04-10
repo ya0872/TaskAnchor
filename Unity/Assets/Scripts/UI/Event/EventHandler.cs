@@ -30,9 +30,9 @@ public class EventHandler : MonoBehaviour
         _taskListView.Show(taskViewModelList);
     }
 
-    public void HandleTaskAdded(int taskId)
+    public void HandleTaskAdded(string title)
     {
-        List<TaskViewModel> taskViewModelList = _taskController.AddTask(taskId);
+        List<TaskViewModel> taskViewModelList = _taskController.AddTask(title);
         
         _taskListView.Show(taskViewModelList);
     }
