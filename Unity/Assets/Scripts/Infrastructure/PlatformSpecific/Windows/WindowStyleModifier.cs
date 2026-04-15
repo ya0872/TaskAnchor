@@ -42,8 +42,8 @@ public class WindowStyleModifier : MonoBehaviour
         style &= ~WS_MAXIMIZEBOX;
         style &= ~WS_MINIMIZEBOX;
 
-        // サイズ変更は可能にする（ビット演算でフラグをオンにする）
-        style |= WS_THICKFRAME;
+        // 【修正後】サイズ変更を不可にする（ビット演算でフラグをオフにする）
+        style &= ~WS_THICKFRAME;
 
         // 変更したスタイルをOSにセット
         SetWindowLong(hWnd, GWL_STYLE, style);
