@@ -1,14 +1,14 @@
 # TaskAnchor
 
 ## 概要
-TaskAnchorは、タスク管理を目的としたUnity製アプリケーションです。クリーンアーキテクチャを意識した設計となっており、各レイヤーごとに責務が分離されています。
+TaskAnchorは、タスク管理を目的としたUnity製アプリケーションです。
 
 ## ディレクトリ構成
 ```
 TaskAnchor/
 ├── Unity/
 │   ├── Assets/
-│   │   ├── Scripts/         # ソースコード（UI, Application, Domain, Infrastructure）
+│   │   ├── Scripts/         # ソースコード
 │   │   ├── Plugins/         # 外部プラグイン（SQLite4Unity3d等）
 │   │   ├── Prefabs/         # プレハブ
 │   │   ├── Scenes/          # シーンファイル
